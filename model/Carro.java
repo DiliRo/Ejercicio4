@@ -1,6 +1,8 @@
 package model;
 
-public class Carro extends Vehiculo{
+import interfaces.Alquilable;
+
+public class Carro extends Vehiculo implements Alquilable{
     private int capacidad;
     private Boolean automatico;
 
@@ -24,6 +26,28 @@ public class Carro extends Vehiculo{
 
     public void setAutomatico(Boolean automatico){
         this.automatico = automatico;
+    }
+
+    
+    @Override
+    public double calcularCostos(int dias){
+        double subtotal = 0.0;
+        double total = 0.0;
+
+        subtotal = getTarifaDiaria() * dias;
+
+        if(this.automatico){
+            total = subtotal + 50.00;
+            return total;
+        }else{
+            total = subtotal;
+            return total;
+        }
+    }
+
+    @Override
+    public String toString(){
+        return "Carro{"+ "marca:" + getMarca() +"modelo:" + getModelo() + "placa:" +getPlaca()  + ", capacidad:" + capacidad + ", transmisión:" + (automatico ? "Automática" : "Manual") + ", tarifa:" + getTarifaDiaria() +", disponibilidad:" + (getDisponibilidad() ? "Disponible" : "No disponible") + '}';
     }
 }
 

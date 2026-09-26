@@ -1,6 +1,6 @@
 package model;
 
-public class Vehiculo{
+public class Vehiculo {
 
     private String placa;
     private String marca;
