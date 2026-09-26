@@ -1,11 +1,35 @@
 package view;
+import controller.CarroController;
+import controller.MotocicletaContoller;
+import controller.PesadosController;
+import controller.ReporteController;
 import java.util.Scanner;
-
 public class MenuView{
     Scanner sc = new Scanner(System.in);
-    CarroView carroView = new CarroView();
-    MotocicletaView motocicletaView = new MotocicletaView();
-    PesadosView pesadosView = new PesadosView();
+    private  CarroController carroController;
+    private  MotocicletaContoller motocicletaController;
+    private  PesadosController pesadosController;
+    private  ReporteController reporteController;
+    private  CarroView carroView;
+    private  MotocicletaView motocicletaView;
+    private  PesadosView pesadosView;
+
+    
+    public MenuView() {
+        carroController = new CarroController();
+        motocicletaController = new MotocicletaContoller();
+        pesadosController = new PesadosController();
+
+        reporteController = new ReporteController(
+            carroController,
+            motocicletaController,
+            pesadosController
+        );
+
+        carroView = new CarroView(carroController);
+        motocicletaView = new MotocicletaView(motocicletaController);
+        pesadosView = new PesadosView(pesadosController);
+    }
 
 
     public void agregarVehiculo(){
@@ -19,9 +43,9 @@ public class MenuView{
         if (tipoVehiculo == 'M' || tipoVehiculo == 'm') {
             motocicletaView.AgregarMotocicleta(placa);
         } else if (tipoVehiculo == 'P' || tipoVehiculo == 'p') {
-            pesadosView.AgregarPesado(placa);
-        } else if (tipoVehiculo == 'C' || tipoVehiculo == 'c') {
             carroView.AgregarCarro(placa);
+        } else if (tipoVehiculo == 'C' || tipoVehiculo == 'c') {
+            pesadosView.AgregarPesado(placa);
         }
     }
 
@@ -35,9 +59,9 @@ public class MenuView{
         if (tipoVehiculo == 'M' || tipoVehiculo == 'm') {
             motocicletaView.BuscarMotocilcetaPlaca(placa);
         } else if (tipoVehiculo == 'P' || tipoVehiculo == 'p') {
-            pesadosView.BuscarPesadosPlaca(placa);
-        } else if (tipoVehiculo == 'C' || tipoVehiculo == 'c') {
             carroView.BuscarCarroPlaca(placa);
+        } else if (tipoVehiculo == 'C' || tipoVehiculo == 'c') {
+            pesadosView.BuscarPesadosPlaca(placa);
         }
     }
 
@@ -52,9 +76,9 @@ public class MenuView{
         if (tipoVehiculo == 'M' || tipoVehiculo == 'm') {
             motocicletaView.Cotizarmotocicleta(placa);
         } else if (tipoVehiculo == 'P' || tipoVehiculo == 'p') {
-            pesadosView.CotizarPesados(placa);
-        } else if (tipoVehiculo == 'C' || tipoVehiculo == 'c') {
             carroView.CotizarCarro(placa);
+        } else if (tipoVehiculo == 'C' || tipoVehiculo == 'c') {
+            pesadosView.CotizarPesados(placa);
         }
     }
 
@@ -68,9 +92,9 @@ public class MenuView{
         if (tipoVehiculo == 'M' || tipoVehiculo == 'm') {
             motocicletaView.confirmarAlquiler(placa);
         } else if (tipoVehiculo == 'P' || tipoVehiculo == 'p') {
-            pesadosView.confirmarAlquiler(placa);
-        } else if (tipoVehiculo == 'C' || tipoVehiculo == 'c') {
             carroView.confirmarAlquiler(placa);
+        } else if (tipoVehiculo == 'C' || tipoVehiculo == 'c') {
+            pesadosView.confirmarAlquiler(placa);
         }
     }
 
@@ -84,9 +108,9 @@ public class MenuView{
         if (tipoVehiculo == 'M' || tipoVehiculo == 'm') {
             motocicletaView.registrarDevolucion(placa);
         } else if (tipoVehiculo == 'P' || tipoVehiculo == 'p') {
-            pesadosView.registrarDevolucion(placa);
-        } else if (tipoVehiculo == 'C' || tipoVehiculo == 'c') {
             carroView.registrarDevolucion(placa);
+        } else if (tipoVehiculo == 'C' || tipoVehiculo == 'c') {
+            pesadosView.registrarDevolucion(placa);
         }
     }
 
@@ -101,6 +125,9 @@ public class MenuView{
             System.out.println("Opción 3: Cotizar Vehiculo");
             System.out.println("Opción 4: Alquilar Vehiculo");
             System.out.println("Opción 5: Devolver Vehiculo");
+            System.out.println("Opción 6: Consultar flota de vehiculos");
+            System.out.println("Opción 7: Consultar reporte generales");
+            System.out.println("Opcion 8: Salir");
             System.out.println("----------------------------------------------------------");
             opcion = sc.nextInt();
             sc.nextLine();
@@ -120,9 +147,19 @@ public class MenuView{
             case 5:
                 devolverVehiculo();
                 break;
+            case 6:
+                reporteController.generarFlota();
+                break;
+            case 7:
+                reporteController.generarReporteGenerales();
+                break;
+            case 8:
+                System.out.println("Saliendo del programa...");
+                break;
             default:
-                throw new AssertionError();
+                System.out.println("Opción inválida. Por favor, seleccione una opción válida.");
+                break;
         }
-        }while(opcion != 7);
+        }while(opcion != 8);
     }
 }

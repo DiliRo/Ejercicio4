@@ -4,13 +4,21 @@ import controller.PesadosController;
 import java.util.Scanner;
 
 public class PesadosView{
+    private PesadosController pesadosController;
 
     Scanner sc = new Scanner(System.in);
-    PesadosController pesadosController = new PesadosController();
+
+    public PesadosView(PesadosController pesadosController) {
+        this.pesadosController = pesadosController;
+    }
 
     public void AgregarPesado(String placa){
         System.out.println("Ingrese la capacidad de carga del vehiculo pesado (en kg, unicamente el numero)");
         int capacidadCarga = sc.nextInt();
+        while (capacidadCarga <= 0){
+            System.out.println("La tarifa diaria debe ser mayor a cero, vuelva a intentar");
+            capacidadCarga = sc.nextInt();
+        }
         sc.nextLine();
 
         System.out.println("Ingrese la marca del vehiculo pesado");
@@ -21,6 +29,10 @@ public class PesadosView{
 
         System.out.println("Ingrese la tarifa diaria del vehiculo pesado");
         float tarifaDiaria = sc.nextFloat();
+        while (tarifaDiaria <= 0){
+            System.out.println("La tarifa diaria debe ser mayor a cero, vuelva a intentar");
+            tarifaDiaria = sc.nextFloat();
+        }
         sc.nextLine();
 
         System.out.println("Ingrese si esta disponible (1 para si, 0 para no) ");
@@ -39,9 +51,13 @@ public class PesadosView{
         }
     }
 
-     public void CotizarPesados(String placa){
+    public void CotizarPesados(String placa){
         System.out.println("Ingrese la cantidad de dias a cotizar");
         int dias = sc.nextInt();
+        while (dias <=0){
+            System.out.println("La cantidad de días tiene que ser mayor a 0, vuelva a intentar");
+            dias = sc.nextInt();
+        }
         sc.nextLine();
         pesadosController.CotizarPesado(placa, dias);
     }
@@ -49,6 +65,10 @@ public class PesadosView{
     public void confirmarAlquiler(String placa){
         System.out.println("Ingrese la cantidad de dias a alquilar");
         int dias = sc.nextInt();
+        while (dias <=0){
+            System.out.println("La cantidad de días tiene que ser mayor a 0, vuelva a intentar");
+            dias = sc.nextInt();
+        }
         sc.nextLine();
         pesadosController.confirmarAlquiler(placa, dias);
     }
